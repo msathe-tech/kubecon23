@@ -4,3 +4,4 @@ dontRequireShieldedVm.yaml
 provenance
 signature
 vmExternalIP.yaml
+gcp_access_values

@@ -1,9 +1,9 @@
 #!/bin/bash
 
-export PROJECT_ID=sp1-slsa-feb2-2023
-export ORGANIZATION_ID=454101079359
-export BILLING_ACCOUNT=019433-1C15AD-8E21B4
-export GCP_USER_ACCOUNT=admin@madhavhsathe.altostrat.com
+export PROJECT_ID=kubecon23-1
+export ORGANIZATION_ID=<your-org-id>
+export BILLING_ACCOUNT=<your-billing-id>
+export GCP_USER_ACCOUNT=<your-gcp-user-name>
 PROJECT_NUMBER=$(gcloud projects describe $PROJECT_ID --format='value(projectNumber)')
 
 export TEKTON_CLUSTER=tkn-cluster
