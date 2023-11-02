@@ -1,9 +1,10 @@
 #!/bin/bash
 
 export PROJECT_ID=kubecon23-1
-export ORGANIZATION_ID=<your-org-id>
-export BILLING_ACCOUNT=<your-billing-id>
-export GCP_USER_ACCOUNT=<your-gcp-user-name>
+# fill in your values here before execution 
+# export ORGANIZATION_ID=<your-org-id> 
+# export BILLING_ACCOUNT=<your-billing-id>
+# export GCP_USER_ACCOUNT=<your-gcp-user-name>
 PROJECT_NUMBER=$(gcloud projects describe $PROJECT_ID --format='value(projectNumber)')
 
 export TEKTON_CLUSTER=tkn-cluster

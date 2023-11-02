@@ -53,11 +53,12 @@ Verify the tasks created by running `tkn tasks list` and pipelines by running `t
 Execute the build pipeline by running the following two commands:
 
 ```
+source ./gcp_access_values.sh
 source set_env_vars.sh
 tkn pipeline start kaniko-test-pipeline \
 -p image=${LOCATION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REPO}/fooapp \
 --pod-template=pod-template.yaml \
--p source_url=https://github.com/slsa-demo/foo-app \
+-p source_url=https://github.com/kubecon23/foo-app \
 -w name=source-workspace,claimName=workspace-pvc \
 -w name=cache-workspace,emptyDir="" \
 -s tekton-ksa \
