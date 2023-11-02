@@ -1,0 +1,6 @@
+hydrated_binauth_policy.yaml
+dontRequireOSLogin.yaml
+dontRequireShieldedVm.yaml
+provenance
+signature
+vmExternalIP.yaml

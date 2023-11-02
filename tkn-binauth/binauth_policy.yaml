@@ -1,0 +1,10 @@
+globalPolicyEvaluationMode: ENABLE
+defaultAdmissionRule:
+  evaluationMode: ALWAYS_DENY
+  enforcementMode: ENFORCED_BLOCK_AND_AUDIT_LOG
+clusterAdmissionRules:
+  ${ZONE}.${WORKLOAD_CLUSTER}:
+    evaluationMode: REQUIRE_ATTESTATION
+    enforcementMode: ENFORCED_BLOCK_AND_AUDIT_LOG
+    requireAttestationsBy:
+      projects/${PROJECT_ID}/attestors/${ATTESTOR_NAME}
