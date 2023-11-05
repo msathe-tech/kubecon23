@@ -1,5 +1,6 @@
 
 #!/bin/bash
+source gcp_access_values.sh
 source set_env_vars.sh
 
 alias gcurl='curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer $(gcloud auth print-access-token)"'

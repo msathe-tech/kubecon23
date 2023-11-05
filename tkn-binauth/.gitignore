@@ -5,3 +5,4 @@ provenance
 signature
 vmExternalIP.yaml
 gcp_access_values.sh
+allowed-k8s.yaml

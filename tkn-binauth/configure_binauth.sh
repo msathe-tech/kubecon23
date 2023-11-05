@@ -1,5 +1,5 @@
 #!/bin/bash
-
+source gcp_access_values.sh
 source set_env_vars.sh
 
 #Allow default SA to pull images from Artifact Registrt

@@ -19,6 +19,8 @@ Here we will set up two clusters:
 
 ### Edit the environment variables 
 Edit [set_env_vars.sh](./set_env_vars.sh) to replace the values for environment variables such a project name, billing account, organization id, service accounts etc.
+The GCP access values are in untracked [gcp_access_values.sh](./gcp_access_values.sh) file. 
+You need to create this sh files and specify project ID, billing ID and username. 
 
 ### Create GKE clusters
 Run the script that will create a project, enable required APIs and create two clusters
@@ -58,7 +60,7 @@ source set_env_vars.sh
 tkn pipeline start kaniko-test-pipeline \
 -p image=${LOCATION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REPO}/fooapp \
 --pod-template=pod-template.yaml \
--p source_url=https://github.com/kubecon23/foo-app \
+-p source_url=https://github.com/slsa-demo/foo-app \
 -w name=source-workspace,claimName=workspace-pvc \
 -w name=cache-workspace,emptyDir="" \
 -s tekton-ksa \
@@ -108,9 +110,16 @@ Error creating: admission webhook "imagepolicywebhook.image-policy.k8s.io" denie
 
 ```
 
+## Optional: Promote the app to prod with additional attestations
+Setup a prod cluster and then add new attestation policy that contains the existing attestor and a new one created for prod. 
 
-
-
+```
+./setup_prod_k8s_cluster.sh
+```
+Setup create resources to setup binary authorization for production cluster. 
+```
+./configure_prod_binauth.sh
+```
 
 
 
