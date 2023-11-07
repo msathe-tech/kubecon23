@@ -32,12 +32,16 @@ export IMAGE_URL=$(tkn pr describe --last -o jsonpath="{.status.taskRuns..taskRe
 #     --attestor="projects/${PROJECT_ID}/attestors/${ATTESTOR_NAME}" \
 #     --artifact-url="${IMAGE_URL}@${IMAGE_DIGEST}"
 
-wait_for_key
 
 echo ""
 echo "*********"
 echo "*********"
 echo " Verify the signature from drydock BUILD occurrence"
+echo "*********"
+echo "*********"
+echo ""
+wait_for_key
+
 #Retrieve provenance 
 gcurl https://containeranalysis.googleapis.com/v1/projects/$PROJECT_ID/occurrences\?filter\="resourceUrl=\"$IMAGE_URL@$IMAGE_DIGEST\"%20AND%20kind=\"BUILD\"" | \
 jq -r '.occurrences[0].envelope.payload' | tr '\-_' '+/' | base64 -d > provenance
@@ -56,7 +60,10 @@ echo ""
 echo "*********"
 echo "*********"
 echo "Verify the SLSA attestation from drydock ATTESTATION occurrence"
-
+echo "*********"
+echo "*********"
+echo ""
+wait_for_key
 #Retrieve provenance 
 gcurl https://containeranalysis.googleapis.com/v1/projects/$PROJECT_ID/occurrences\?filter\="resourceUrl=\"$IMAGE_URL@$IMAGE_DIGEST\"%20AND%20kind=\"ATTESTATION\"" | \
 jq -r '.occurrences[0].envelope.payload' | tr '\-_' '+/' | base64 -d > provenance
