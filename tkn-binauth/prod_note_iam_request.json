@@ -1,0 +1,13 @@
+{
+  "resource": "projects/kubecon23-8/notes/prod-simplesigning",
+  "policy": {
+    "bindings": [
+      {
+        "role": "roles/containeranalysis.notes.occurrences.viewer",
+        "members": [
+          "serviceAccount:service-479780529131@gcp-sa-binaryauthorization.iam.gserviceaccount.com"
+        ]
+      }
+    ]
+  }
+}

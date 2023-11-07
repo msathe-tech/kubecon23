@@ -26,9 +26,10 @@ You need to create this sh files and specify project ID, billing ID and username
 Run the script that will create a project, enable required APIs and create two clusters
 
 ```
-./setup_k8s_clusters.sh
+./01_setup_k8s_clusters.sh
 ```
-Ensure both clusters are in running status by verifying using the command
+
+Ensure all clusters are in running status by verifying using the command
 
 ```
 gcloud container clusters list
@@ -39,7 +40,7 @@ gcloud container clusters list
 On the Tekton cluster, we will now install Tekton, Tekton Pipelines and setup KMS key so that Tekton chains can attest using the key, and the chains configs are updated to be able to do so. Workload identity will be configured so that kubernetes service account has necessary access to push images to artifact registry. Google service account associated with this Kubernetes service account will be given necessary access through IAM.
 
 ```
-./setup_tekton.sh
+./02_setup_tekton.sh
 ```
 
 ## Run Tekton pipeline to build a container
@@ -47,7 +48,7 @@ On the Tekton cluster, we will now install Tekton, Tekton Pipelines and setup KM
 Review pipeline steps from this sample pipeline [kaniko-pipeline.yaml](./kaniko-pipeline.yaml). This pipeline uses two tasks. Create `git-clone` and `kaniko-chains` tasks from Tekton Hub and the pipeline by running.
 
 ```
-./setup_tasks_pipeline.sh
+./03_setup_tasks_pipeline.sh
 ```
 
 Verify the tasks created by running `tkn tasks list` and pipelines by running `tkn pipelines list`
@@ -55,29 +56,13 @@ Verify the tasks created by running `tkn tasks list` and pipelines by running `t
 Execute the build pipeline by running the following two commands:
 
 ```
-source ./gcp_access_values.sh
-source set_env_vars.sh
-tkn pipeline start kaniko-test-pipeline \
--p image=${LOCATION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REPO}/fooapp \
---pod-template=pod-template.yaml \
--p source_url=https://github.com/slsa-demo/foo-app \
--w name=source-workspace,claimName=workspace-pvc \
--w name=cache-workspace,emptyDir="" \
--s tekton-ksa \
---use-param-defaults \
---showlog
-```
-
-Authenticate to gcloud to retrieve the Application Default Credentials
-
-```
-gcloud auth application-default login
+./05_build_app.sh
 ```
 
 Verify provenance by running the following script
 
 ```
-source verify_provenance.sh
+source ./06_verify_provenance.sh
 ```
 
 You should see `Verified OK` message at the end of the provenance check indicating the provenance was good.
@@ -87,17 +72,20 @@ You should see `Verified OK` message at the end of the provenance check indicati
 Configure Attestor and the binary auth policy by running
 
 ```
-./configure_binauth.sh
+./04_configure_binauth.sh
 ```
 
 ## Deploy workloads
+
+You can repeate following steps for demos. 
+Keep deleting - Workloads, Services and the Container images from the repo after every demo. This will keep the setup clean.
 
 Try deploying workloads that are 
 * not attested first, and it should fail due to BinAuthz policy
 * attested by Tekton Chains, that should succeed deployment
 
 ```
-./deploy_workloads.sh
+./07_deploy_workloads.sh
 ```
 See the pod for the `allowed` workload comes up and is running.
 
@@ -111,15 +99,10 @@ Error creating: admission webhook "imagepolicywebhook.image-policy.k8s.io" denie
 ```
 
 ## Optional: Promote the app to prod with additional attestations
-Setup a prod cluster and then add new attestation policy that contains the existing attestor and a new one created for prod. 
 
+Try the multi-attestor scenario with prod cluster
 ```
-./setup_prod_k8s_cluster.sh
+./08_deploy_prod_workloads.sh 
 ```
-Setup create resources to setup binary authorization for production cluster. 
-```
-./configure_prod_binauth.sh
-```
-
 
 

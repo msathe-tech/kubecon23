@@ -1,0 +1,8 @@
+{
+  "name": "projects/kubecon23-8/notes/prod-simplesigning",
+  "attestation": {
+    "hint": {
+      "human_readable_name": "promote to prod"
+    }
+  }
+}

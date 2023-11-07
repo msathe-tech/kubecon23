@@ -2,8 +2,11 @@
 
 source set_env_vars.sh
 
+gcloud config set project $PROJECT_ID
+
 #get security context and rename it to tkn
 gcloud container clusters get-credentials --region=us-central1 "${TEKTON_CLUSTER}" 
+kubectx -c
 kubectx tkn=$(kubectx -c)
 
 #create kubernetes service account to associate with workload identity

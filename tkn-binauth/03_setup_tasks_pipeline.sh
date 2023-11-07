@@ -1,8 +1,13 @@
 
 #!/bin/bash
 
+source set_env_vars.sh
+gcloud config set project $PROJECT_ID
 #switch context to tekton cluster
-kubectx tkn
+# kubectx tkn
+gcloud container clusters get-credentials --region=us-central1 "${TEKTON_CLUSTER}" 
+kubectx -c
+kubectx tkn=$(kubectx -c)
 
 #install tasks git-clone and kaniko-chains from tekton hub
 tkn hub install task git-clone

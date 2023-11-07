@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export PROJECT_ID=kubecon23-2
+export PROJECT_ID=kubecon23-8
 # fill in your values here before execution 
 # export ORGANIZATION_ID=<your-org-id> 
 # export BILLING_ACCOUNT=<your-billing-id>
