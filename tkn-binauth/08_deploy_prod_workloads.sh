@@ -48,6 +48,7 @@ echo "Check GCP console if the prod deployment was successful"
 echo "*********"
 echo "*********"
 echo ""
+wait_for_key
 # echo "Check if the application is running"
 # kubectl --context prod-cluster get deployment -n default
 echo ""
@@ -60,12 +61,10 @@ wait_for_key
 echo ""
 echo "*********"
 echo "*********"
-echo "We will now add prod attestation to the image and retry the deployment"
+echo "We will now add prod attestation to the image"
 wait_for_key
-
 
 # echo "We will have to use --public-key-id-override since flag was provided when this KMS key was added to the Attestor."
-wait_for_key
 # try :latest instead of a digest 
 gcloud beta container binauthz attestations sign-and-create \
     --project="${PROJECT_ID}" \
@@ -97,7 +96,11 @@ gcloud container binauthz attestations list\
 wait_for_key
 echo "*********"
 echo "*********"
+echo "We will now retry the deployment after adding 2nd attestation to the image"
+echo "*********"
+echo "*********"
 echo ""
+wait_for_key
 kubectl --context prod-cluster apply -f allowed-k8s.yaml
 echo ""
 echo "*********"
