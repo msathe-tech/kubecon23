@@ -53,11 +53,23 @@ Review pipeline steps from this sample pipeline [kaniko-pipeline.yaml](./kaniko-
 
 Verify the tasks created by running `tkn tasks list` and pipelines by running `tkn pipelines list`
 
+## Configure Binary Authorizaton for the workload cluster
+
+Configure Attestor and the binary auth policy by running
+
+```
+./04_configure_binauth.sh
+```
+
+## Build app and push container to registry 
+
 Execute the build pipeline by running the following two commands:
 
 ```
 ./05_build_app.sh
 ```
+
+## Verify provenance
 
 Verify provenance by running the following script
 
@@ -67,13 +79,7 @@ source ./06_verify_provenance.sh
 
 You should see `Verified OK` message at the end of the provenance check indicating the provenance was good.
 
-## Configure Binary Authorizaton for the workload cluster
 
-Configure Attestor and the binary auth policy by running
-
-```
-./04_configure_binauth.sh
-```
 
 ## Deploy workloads
 
